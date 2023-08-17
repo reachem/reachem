@@ -8,7 +8,7 @@ const chance = new Chance();
 
 class Example {
   constructor(){
-    this.username = chance.word({length: 8})
+    this.username = chance.word({length: 8});
     this.email = chance.email();
     this.lat= chance.latitude();
     this.long= chance.longitude();
@@ -17,5 +17,4 @@ class Example {
 
 }
 
-
-module.exports = {Example}
+console.log(new Example())

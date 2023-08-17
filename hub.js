@@ -9,7 +9,7 @@ io.listen(3000);
 const reach = io.of('/reach');
 
 function handleSendLocation(payload) {
-  console.log(`My current location is lat:${payload.lat} lon:${payload.lon}`, payload.timestamp);
+  console.log(`My current location is lat:${payload.lat} lon:${payload.long}`, payload.timestamp);
   reach.emit(events.sendLocation);
 }
 
@@ -18,7 +18,7 @@ function handleReceiveLocation(payload) {
   reach.emit(events.receiveLocation, {
     username: payload.username,
     lat: payload.lat,
-    lon: payload.lon,
+    long: payload.long,
   });
 }
 
@@ -27,7 +27,7 @@ function handleConfirmLocation(payload) {
   reach.emit(events.confirmLocation, {
     username: payload.username,
     lat: payload.lat,
-    lon: payload.lon,
+    long: payload.long,
   });
 }
 
@@ -55,5 +55,12 @@ function requestLocation(socket){
 
 requestLocation(reach);
 
-module.exports = { startSocketServer, handleSendLocation, handleReceiveLocation, handleConfirmLocation }
+module.exports = { 
+  startSocketServer, 
+  handleSendLocation, 
+  handleReceiveLocation, 
+  handleConfirmLocation,
+  io,
+  reach,
+};
 
