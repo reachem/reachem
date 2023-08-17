@@ -12,5 +12,5 @@ const person = new Example();
 
 client.on('request', () => {
   console.log('sending info', person)
-  client.emit(person)
+  // client.emit(person)
 });
