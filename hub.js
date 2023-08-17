@@ -10,10 +10,15 @@ const reach = io.of('/reach');
 
 function handleSendLocation(payload) {
   console.log(`My current location is lat:${payload.lat} lon:${payload.long}`, payload.timestamp);
-  reach.emit(events.sendLocation);
-}
+  reach.to('admin').emit(events.receiveLocation, payload);  
+  reach.emit(events.receiveLocation, {
+    username: payload.username,
+    lat: payload.lat,
+    long: payload.long,
+    timestamp: payload.timestamp,
+  });}
 
-function handleReceiveLocation(payload) {
+function handleReceiveLocation(payloçad) {
   console.log(`Other users can now see the location for ${payload.username}`, payload.timestamp);
 
   reach.to('admin').emit(events.receiveLocation, payload);  
@@ -21,6 +26,7 @@ function handleReceiveLocation(payload) {
     username: payload.username,
     lat: payload.lat,
     long: payload.long,
+    timestamp: payload.timestamp,
   });
 }
 
@@ -39,9 +45,9 @@ function handleConnection(socket) {
     console.log('welcome admin');
     socket.join('admin');
   }
-  socket.on(events.sendLocation, handleSendLocation);
-  socket.on(events.receiveLocation, handleReceiveLocation);
-  socket.on(events.confirmLocation, handleConfirmLocation);
+  socket.on(events.sendLocation, (payload) => handleSendLocation(payload));
+  socket.on(events.receiveLocation, (payload) => handleReceiveLocation(payload));
+  socket.on(events.confirmLocation, (payload) => handleConfirmLocation(payload));
 }
 
 function startSocketServer() {
