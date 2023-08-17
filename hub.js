@@ -15,6 +15,8 @@ function handleSendLocation(payload) {
 
 function handleReceiveLocation(payload) {
   console.log(`Other users can now see the location for ${payload.username}`, payload.timestamp);
+
+  reach.to('admin').emit(events.receiveLocation, payload);  
   reach.emit(events.receiveLocation, {
     username: payload.username,
     lat: payload.lat,
@@ -33,6 +35,10 @@ function handleConfirmLocation(payload) {
 
 function handleConnection(socket) {
   console.log('New connection', socket.id);
+  if(socket.handshake.auth.role === 'admin'){
+    console.log('welcome admin');
+    socket.join('admin');
+  }
   socket.on(events.sendLocation, handleSendLocation);
   socket.on(events.receiveLocation, handleReceiveLocation);
   socket.on(events.confirmLocation, handleConfirmLocation);
@@ -43,6 +49,14 @@ function startSocketServer() {
   reach.on('connection', (socket) => handleConnection(socket));
   
 }
+
+
+// function requestLocation(socket){
+//   socket.emit(requestLocation)
+// };
+
+// requestLocation(reach);
+
 module.exports = { 
   startSocketServer, 
   handleSendLocation, 
