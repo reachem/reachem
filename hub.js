@@ -1,12 +1,20 @@
 'use strict';
 
-const { Server } = require('socket.io');
 const events = require('./eventPool');
 
-const io = new Server();
-io.listen(3000);
+const express = require('express');
+const app = express();
+const http = require('http');
+const server = http.createServer(app);
+const {Server} = require('socket.io');
+const io = new Server(server);
+const {Example} = require('./clients/example')
 
 const reach = io.of('/reach');
+
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/server/index.html')
+})
 
 function handleSendLocation(payload) {
   console.log(`My current location is lat:${payload.lat} lon:${payload.long}`, payload.timestamp);
@@ -48,12 +56,19 @@ function handleConnection(socket) {
   socket.on(events.sendLocation, (payload) => handleSendLocation(payload));
   socket.on(events.receiveLocation, (payload) => handleReceiveLocation(payload));
   socket.on(events.confirmLocation, (payload) => handleConfirmLocation(payload));
+  socket.on(events.whoami, () => handleWhoAmI() );
+}
+
+function handleWhoAmI(){
+  let example = new Example()
+  console.log(example)
+  reach.emit(events.receiveLocation, example)
 }
 
 function startSocketServer() {
   console.log('The server is connected');
   reach.on('connection', (socket) => handleConnection(socket));
-  
+  server.listen(3000, () => console.log('now listening on port 3000'));
 }
 
 

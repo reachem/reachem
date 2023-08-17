@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Reach 'em</title>
+  </head>
+  <body>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+<script>
+var reach = io('/reach');
+reach.on('receiveLocation', (payload) => {
+  console.log(payload)
+})
+
+reach.emit('whoami')
+// reach.emit('sendLocation', payload)
+console.log('hi')
+
+</script>
+  </body>
+
+
+</html>
