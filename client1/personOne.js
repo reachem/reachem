@@ -11,14 +11,15 @@ function sendPickup(events) {
     // company: 'Flowers',
   };
 
-  const payload = {
-    event: 'pickup', // either pickup or delivered
-    messageId: event.orderId, // unique id from the original payload
-    clientId: `1-800-flowers`, // either acme-widgets or 1-800-flowers
-    order: event,
+  const   payload = {
+    username: chance.string({length: 8}),
+    email: chance.email(),
+    lat: 32.4124,
+    long: 12.143241,
+    timestamp: new Date(),
   };
 
-  console.log('Vendor asking for pickup!', event);
+  console.log('Post!', event);
   events.emit(EVENT_NAMES.pickup, payload);
 }
 function acknowledgePost(payload, client) {
@@ -29,8 +30,8 @@ function acknowledgePost(payload, client) {
 
 
 function startClient(client) {
-  console.log('Vendor is started');
-  client.emit('getAll', 'acme-widgets');
+  console.log('Client is started');
+  client.emit('getAll', '');
   client.on(EVENT_NAMES.delivered, (payload) =>
     acknowledgePost(payload, client)
   );

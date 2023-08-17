@@ -26,11 +26,9 @@ function acknowledgePost(payload, client) {
   client.emit('received', payload);
 }
 
-
-
 function startClient(client) {
-  console.log('Vendor is started');
-  client.emit('getAll', 'acme-widgets');
+  console.log('Client is started');
+  client.emit('getAll', '');
   client.on(EVENT_NAMES.delivered, (payload) =>
     acknowledgePost(payload, client)
   );
