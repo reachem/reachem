@@ -2,7 +2,7 @@
 
 const { chance, EVENT_NAMES } = require('../util');
 
-function sendPickup(events) {
+function sendPost(events) {
 
   const   payload = {
     username: chance.string({length: 8}),
@@ -12,7 +12,7 @@ function sendPickup(events) {
     timestamp: new Date(),
   };
 
-  console.log('Post!', event);
+  console.log('Post!');
   events.emit(EVENT_NAMES.pickup, payload);
 }
 function acknowledgePost(payload, client) {
@@ -31,7 +31,7 @@ function startClient(client) {
   
   function ready() {
     // sends an initial pickup event, then sets a timer for 4-5 seconds and repeats
-    sendPickup(client);
+    sendPost(client);
     setTimeout(ready, chance.integer({ min: 5000, max: 10000 }));
   }
   // calls itself every 4 - 5 seconds
@@ -39,5 +39,5 @@ function startClient(client) {
 }
 
 module.exports = {startClient,
-  toTest: {sendPickup, acknowledgePost}
+  toTest: {sendPost, acknowledgePost}
 };
