@@ -3,13 +3,6 @@
 const { chance, EVENT_NAMES } = require('../util');
 
 function sendPickup(events) {
-  const event = {
-    // store: chance.city(),
-    // orderId: chance.guid(),
-    // customer: chance.name(),
-    // address: chance.address(),
-    // company: 'Flowers',
-  };
 
   const   payload = {
     username: chance.string({length: 8}),
