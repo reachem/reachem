@@ -10,9 +10,9 @@ class Example {
   constructor(){
     this.username = chance.word({length: 8});
     this.email = chance.email();
-    this.lat= chance.latitude();
-    this.long= chance.longitude();
-    this.timestamp= new Date();
+    this.lat = chance.latitude();
+    this.long = chance.longitude();
+    this.timestamp = new Date();
   }
 }
 
