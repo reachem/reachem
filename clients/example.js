@@ -17,6 +17,5 @@ class Example {
 
 }
 
-console.log(new Example())
 
 module.exports = {Example}
