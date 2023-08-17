@@ -5,12 +5,9 @@ const client = io('ws://localhost:3000/reach',
   {auth: {role: 'admin'}}
 );
 const {Example} = require('./example');
-const { sendLocation, receiveLocation ,confirmLocation} = require('../hub');
+const { sendLocation, receiveLocation ,confirmLocation} = require('../eventPool');
 
 const person = new Example();
 
 
-client.on('request', () => {
-  console.log('sending info', person)
-  // client.emit(person)
-});
+setInterval(() => {client.emit(sendLocation, person)},5000)

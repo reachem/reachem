@@ -14,7 +14,6 @@ class Example {
     this.long= chance.longitude();
     this.timestamp= new Date();
   }
-
 }
 
-console.log(new Example())
+module.exports = {Example};

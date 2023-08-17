@@ -15,6 +15,8 @@ function handleSendLocation(payload) {
 
 function handleReceiveLocation(payload) {
   console.log(`Other users can now see the location for ${payload.username}`, payload.timestamp);
+
+  reach.to('admin').emit(events.receiveLocation, payload);  
   reach.emit(events.receiveLocation, {
     username: payload.username,
     lat: payload.lat,
@@ -49,11 +51,11 @@ function startSocketServer() {
 }
 
 
-function requestLocation(socket){
-  socket.emit('request')
-};
+// function requestLocation(socket){
+//   socket.emit(requestLocation)
+// };
 
-requestLocation(reach);
+// requestLocation(reach);
 
 module.exports = { 
   startSocketServer, 
