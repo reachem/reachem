@@ -9,5 +9,11 @@ const { sendLocation, receiveLocation ,confirmLocation} = require('../eventPool'
 
 const person = new Example();
 
+client.on(receiveLocation, (payload) => {
+  console.log('client connected, ', payload);
+})
+
 
 setInterval(() => {client.emit(sendLocation, person)},5000)
+
+
