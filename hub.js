@@ -50,5 +50,5 @@ module.exports = {
   handleConfirmLocation,
   io,
   reach,
- }
+};
 
